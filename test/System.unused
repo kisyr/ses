@@ -9,22 +9,15 @@ struct ComponentD : ses::Component<ComponentD> {};
 struct SystemA : ses::System<SystemA, 
 		ses::Includes<ComponentA, ComponentC>, 
 		ses::Excludes<ComponentB, ComponentD>> {
-	void enter() {}
-	void run() {}
-	void leave() {}
-};
-
-struct SystemB : ses::System<SystemB, 
-		ses::Includes<ComponentA, ComponentB>, 
-		ses::Excludes<ComponentC, ComponentD>> {
-	void enter() {}
-	void run() {}
-	void leave() {}
+	void run(const ses::Instance& instance, const ses::System::Entities& entities) {
+		for (auto& entity : entities) {
+			auto& a = instance.get<ComponentA>(entity);
+		}
+	}
 };
 
 int main() {
-	SystemA system_a;
-	SystemB system_b;
+	SystemTest system;
 
 	return EXIT_SUCCESS;
 }
