@@ -8,6 +8,64 @@ namespace ses {
 namespace detail {
 
 /**
+ * Basic vector implementation for inheritance.
+ */
+template <class T>
+struct Vector {
+	size_t size() const {
+		return vector.size();
+	}
+
+	bool empty() const {
+		return vector.empty();
+	}
+
+	typename std::vector<T>::iterator begin() {
+		return vector.begin();
+	}
+
+	typename std::vector<T>::iterator end() {
+		return vector.end();
+	}
+
+	typename std::vector<T>::const_iterator begin() const {
+		return vector.begin();
+	}
+
+	typename std::vector<T>::const_iterator end() const {
+		return vector.end();
+	}
+
+	void clear() {
+		vector.clear();
+	}
+
+	T& operator[](size_t index) {
+		return vector[index];
+	}
+
+	const T& operator[](size_t index) const {
+		return vector[index];
+	}
+
+	std::vector<T> vector;
+};
+
+template <class T>
+struct AutoVector : Vector<T> {
+	T& operator[](size_t index) {
+		if (index + 1 > vector.size()) {
+			vector.resize(index + 1);
+		}
+		return vector[index];
+	}
+};
+
+template <class T>
+struct RecycleVector : Vector<T> {
+};
+
+/**
  * Type Family templates for auto incrementing a 
  * inheriting type's id().
  */
